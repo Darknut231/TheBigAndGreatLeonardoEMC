@@ -9,5 +9,19 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 df = pd.read_csv('the big and great dataset (TBaGD).csv')
 #print(df.dtypes)
-for i in df['Model of the helicopter']:
-    print(type(i))
+df_no_missing = df.loc[(df["cost(mil$)"] != "Unknown") & (df["cost(mil$)"] != "") & (df["Date of order"] != "Unkown") & (df["Still operatable?"] != "?")]
+X = df_no_missing.drop('Successfull procurement',axis=1).copy()
+X = X.drop('Model of the helicopter',axis=1).copy()
+X = X.drop('Ordered/owned by',axis=1).copy()
+y = df_no_missing['Successfull procurement'].copy()
+X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=10)
+clf_dt = DecisionTreeClassifier(random_state=10)
+clf_dt = clf_dt.fit(X_train,y_train)
+plt.figure(figsize=(15,7.5))
+plot_tree(clf_dt,
+          filled=True,
+          rounded=True,
+          class_names=["Success","Unsuccess"],
+          feature_names=X.columns)
+plt.show()
+#df_no_missing = df with no missings in cost or date =)
