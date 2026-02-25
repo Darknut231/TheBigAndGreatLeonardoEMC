@@ -25,9 +25,9 @@ def findChildren(linkstrings,client,params):
         soup = bs4.BeautifulSoup(response.text,features="html.parser")
         trs = soup.select("tr")
         for tr in trs:
-            if ('trcnmod"' in tr.text):
+            if ('trcnmod"' in tr):
                 tds=tr.findChildren("tds", recursive = False)
-                data = tds.findChildren(recursive = False)
+                data=tds.findChildren(recursive = False)
                 for cell in data:
                     print(cell.text)
                 name = L[37:len(L)-1]

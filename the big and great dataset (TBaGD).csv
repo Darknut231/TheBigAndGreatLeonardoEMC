@@ -1,25 +1,29 @@
-Model of the helicopter,Ordered/owned by,Successfull procurement,Date of order,cost(mil$),Still operatable?,Quantities
-AW009,Italy/Poland,1,2016,3.9,1,1
-AW119T,Brazil/USA/SA,1,2008,2.5,1,1
-AW119T,USA,1,2012,2.5,1,1
-AW119T,Italy/USA,1,2012,2.5,1,1
-AW119T,Israel/USA,1,2021,2.5,1,1
-AW119T,Israel,1,2021,2.5,1,6
-AW119T,Italy/Turkey,1,2021,2.5,1,1
-AW119T,USA,1,2021,2.5,1,19
-AW119T,USA,1,2022,2.5,1,3
-AW119T,USA,1,2023,2.5,1,16
-AW119T,USA,1,2024,2.5,1,2
-AW101 610,Algerian National Navy (SAR),1,2008,Unknown,1,5
-AW101 610,Algerian National Navy (SAR),1,2008,Unknown,0,1
-AWW101 611,Italian Air Force,1,2014,Unknown,1,12
-AW101 612,Norwegian SAR (Search And Rescue),1,2016,30,1,16
-AW101 614,Polish Army,1,2023,Unknown,1,4
-AW101 640,Saudi Gov/Kingdom,1,2013,Unknown,1,2
-AW101 641,indian air force ,1,2010,655,1,11
-AW101 641 (VIP),indian air force,1,2010,655,?,1
-AW101 642 (VIP),Algerian Gov,1,2013,Unknown,1,2
-AW101 VIP,Turkmesistan Airlines,1,2010,Unknown,1,2
-AW101 VIP,Indonesian VIP?,1,2017,Unknown,0,1
-AW101 VIP,Nigerian Air Force,1,2014,Unknown,0,1
-AW101 VIP,Nigerian Air Force,1,2014,Unknown,1,1
+Model of the helicopter,GDP billions $ of the owner,Successfull procurement,Date of order,cost(mil$),Still operatable?
+AW009,2712,1,2016,3.9,1
+AW119T,2260,1,2008,2.5,1
+AW119T,30600,1,2012,2.5,1
+AW119T,2712,1,2012,2.5,1
+AW119T,610,1,2021,2.5,1
+AW119T,610,1,2021,15,1
+AW119T,2712,1,2021,2.5,1
+AW119T,30600,1,2021,47.5,1
+AW119T,30600,1,2022,7.5,1
+AW119T,30600,1,2023,40,1
+AW119T,30600,1,2024,5,1
+AW101 610,285,1,2008,125,1
+AW101 610,285,1,2008,Unknown,0
+AWW101 611,2712,1,2014,360,1
+AW101 612,510,1,2016,480,1
+AW101 614,1000,1,2023,100,1
+AW101 640,1320,1,2013,50,1
+AW101 641,4130,1,2010,7205,1
+AW101 641 (VIP),4130,1,2010,655,?
+AW101 642 (VIP),285,1,2013,56,1
+AW101 VIP,64,1,2010,50,1
+AW101 VIP,1440,1,2017,Unknown,0
+AW101 VIP,334,1,2014,Unknown,0
+AW101 VIP,334,1,2014,Unknown,1
+Mi 171A2,519,0,2021,22,0
+'new medium helicopters',4250,0,2026,1000,0
+AW101 (VIP),4130,0,2010,780,0
+AW101,1440,0,2017,54,0
