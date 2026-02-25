@@ -40,3 +40,4 @@ for row in rows: #this loops through all the rows in the page and collects the i
 
 df= pd.DataFrame(row_list)
 print(df)
+
