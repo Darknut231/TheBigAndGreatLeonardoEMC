@@ -20,7 +20,6 @@ y = df_no_missing['Successfull procurement'].copy()
 
 # one hot encoding
 X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
-print(X_encoded)
 # splitting the data
 X_train, X_test, y_train, y_test = train_test_split(X_encoded,y,random_state=25)
 clf_dt = DecisionTreeClassifier(random_state=15)
@@ -32,7 +31,8 @@ def plotTree(clf_dt,X):
             rounded=True,
             class_names=["Success","Unsuccess"],
             feature_names=X.columns)
-plot_tree(clf_dt,X)
+print(X_encoded)
+plotTree(clf_dt,X_encoded)
 
 #too many positional arguments???
 
