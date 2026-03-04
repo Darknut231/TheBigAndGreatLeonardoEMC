@@ -1,41 +1,47 @@
 
 import selenium
 import pandas as pd
-from selenium import webdriver#importing things
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
- #helpful for exporting data
+import os
 
-url= 'https://www.helis.com/database/model/AW109E/cn'# setting our url
-driver=webdriver.Chrome()#defining what webdriver we want to use
-driver.get(url)#opens the url we told it earlier
-time.sleep(3) # Wait for 3 seconds
+print("RUNNING FILE:", __file__)
+url= 'http://helis.com/database/model/AW109E/cn'
+driver=webdriver.Chrome()
+driver.get(url)
+time.sleep(3) #Press Consent
 
-#mitabla the class of the section of the page which contains all the nessecary info ## this is replaced by a diferenet method of searching the url as when looping through the mitabla, it only looped through the tables rather than the rows within the table
-#//*[@id="trcnmod11046"]/td[4]/b#copied 'xpath' of the location of the title of the vid when inspecting the page ##this can be simplified to .//td[4]/b as we are aleady looking in the correct row (id=trcnmod11046) using line 23
-#//*[@id="metadata-line"]/span[1]#copied xpath of the views of the video, ##same for this one
-#//*[@id="metadata-line"]/span[2]#copied xpath of the age of the video    ##and this one
-
-row_list=[]# set this outside the loop so it dosent get wiped every time we run the loop 
-
-#rows=driver.find_elements(By.CLASS_NAME,'mitabla')#finds all the things (elements) within the class: style.scope ect, however this wont work as it will only find 
+row_list=[]
 rows = driver.find_elements(By.XPATH, "//tr[starts-with(@id,'trcnmod')]")
 
-for row in rows: #this loops through all the rows in the page and collects the info from them
-   
+for row in rows: 
+    
+    #TAIL NUMBER
     code = row.find_element(By.XPATH, ".//td[4]/b").text  
-    year = row.find_element(By.XPATH, './/td[3]').text
-    country= row.find_element(By.XPATH,'.//td[4]/img') #same again for country- this isnt working as there are some countrys missing, i am working on "no such element exemption"module
-    #//*[@id="trcnmod11046"]/td[4]/img
+    
+    #YEAR
+    if len(row.find_element(By.XPATH, ".//td[3]").text) > 0:
+        year = row.find_element(By.XPATH, ".//td[3]").text
+    else:
+        continue                                           
+    
+    #COUNTRY, This bit is ai so idk how it works sry
+    imgs = row.find_elements(By.XPATH, ".//td[4]/img")
 
-    print(code)#just checking it works
+    countries = [img.get_attribute("alt") for img in imgs if img.get_attribute("alt")]
+    if not countries:
+       continue
 
-    #Now for using panda to export stuff
-    vid_item ={#storing all the info into a 'dictionary'
+    country_string = ", ".join(countries)
+
+    #Exporting The Data
+    vid_item ={
         'Tail Number': code,
-        'Country': country,
+        'Country': countries,
         'Year': year
         }
-    row_list.append(vid_item)#adding the dictionary stuff to a list
+    row_list.append(vid_item)
 df= pd.DataFrame(row_list)
-#print(df)
+print(df)
+df.to_excel(r"C:\Users\alexw\OneDrive\Documents\EMS\EMC\Data Dump- Tests\EMCDATA0.xlsx", index=False)# this will now go in the folder, to change the name change teh EMCDATA0 to smh else
