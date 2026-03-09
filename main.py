@@ -16,12 +16,13 @@ df_no_missing = df.loc[(df["cost(mil$)"] != "Unknown") & (df["cost(mil$)"] != ""
 X = df_no_missing.drop('Successfull procurement',axis=1).copy()
 X = X.drop('Model of the helicopter',axis=1).copy()
 X = X.drop('Still operatable?',axis=1).copy()
+X = X.drop('Date of order',axis=1).copy()
 y = df_no_missing['Successfull procurement'].copy()
-
+y = 1 - y
 # one hot encoding
-X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
+#X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
 # splitting the data
-X_train, X_test, y_train, y_test = train_test_split(X_encoded,y,random_state=25)
+X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=25) #x encoded here
 clf_dt = DecisionTreeClassifier(random_state=15)
 clf_dt = clf_dt.fit(X_train,y_train)
 def plotTree(clf_dt,X):
@@ -31,8 +32,9 @@ def plotTree(clf_dt,X):
             rounded=True,
             class_names=["Success","Unsuccess"],
             feature_names=X.columns)
-print(X_encoded)
-plotTree(clf_dt,X_encoded)
+#print(clf_dt.feature_importances_)
+print(pd.value_counts(y))
+plotTree(clf_dt,X) #x encoded here
 
 #too many positional arguments???
 
