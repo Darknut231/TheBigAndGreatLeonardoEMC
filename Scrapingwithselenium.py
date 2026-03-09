@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 import time
 import os
 
-print("RUNNING FILE:", __file__)
 url= 'http://helis.com/database/model/AW109E/cn'
 driver=webdriver.Chrome()
 driver.get(url)
@@ -45,3 +44,4 @@ for row in rows:
 df= pd.DataFrame(row_list)
 print(df)
 df.to_excel(r"C:\Users\alexw\OneDrive\Documents\EMS\EMC\Data Dump- Tests\EMCDATA0.xlsx", index=False)# this will now go in the folder, to change the name change teh EMCDATA0 to smh else
+
