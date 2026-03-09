@@ -3,6 +3,8 @@ import selenium
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 
@@ -10,6 +12,12 @@ url= 'http://helis.com/database/model/AW109E/cn'
 driver=webdriver.Chrome()
 driver.get(url)
 time.sleep(3) #Press Consent
+# Source - https://stackoverflow.com/a/74528967
+# Posted by Prophet
+# Retrieved 2026-03-09, License - CC BY-SA 4.0
+
+WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@class="fc-button fc-cta-consent fc-primary-button"]'))).click()
+
 
 row_list=[]
 rows = driver.find_elements(By.XPATH, "//tr[starts-with(@id,'trcnmod')]")

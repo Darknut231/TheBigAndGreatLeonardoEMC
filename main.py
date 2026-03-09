@@ -1,4 +1,8 @@
 #https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 519 - Bangladesh NG - Nigeria ID - 1440donesia TM - Turkmes610tan 285 - Algeria 1440 - 1440dia SA - Saudia Arabia
+'''
+imports the dataset csv file and builds a decision tree and confusion matrix using sklearn and pandas, created by Danylo, newest version 09/03/2026
+in plans: add more data
+'''
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -18,9 +22,10 @@ X = X.drop('Model of the helicopter',axis=1).copy()
 X = X.drop('Still operatable?',axis=1).copy()
 X = X.drop('Date of order',axis=1).copy()
 y = df_no_missing['Successfull procurement'].copy()
-y = 1 - y
-# one hot encoding
-#X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
+'''
+one hot encoding
+X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
+'''
 # splitting the data
 X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=25) #x encoded here
 clf_dt = DecisionTreeClassifier(random_state=15)
@@ -30,10 +35,9 @@ def plotTree(clf_dt,X):
     plot_tree(clf_dt,
             filled=True,
             rounded=True,
-            class_names=["Success","Unsuccess"],
+            class_names=["Unsuccess","Success"],
             feature_names=X.columns)
 #print(clf_dt.feature_importances_)
-print(pd.value_counts(y))
 plotTree(clf_dt,X) #x encoded here
 
 #too many positional arguments???
