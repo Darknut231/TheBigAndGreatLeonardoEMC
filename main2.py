@@ -13,17 +13,37 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.svm import SVC
 # reading the file
-df = pd.read_csv('the big and great dataset (TBaGD).csv')
-print(df['Successfull procurement'])
+df = pd.read_csv('military spending cool.csv')
+military_spending = {
+    "Poland": 38.0,
+    "USA": 997.0,
+    "Israel": 46.5,
+    "Italy": 38.0,
+    "Algeria": 21.8,
+    "Norway": 10.4,
+    "Saudi": 80.3,
+    "India": 86.1,
+    "Turkmesistan": 1.0,
+    "Indonesia": 11.0,
+    "Nigeria": 3.2,
+    "Bangladesh": 5.0,
+    "England": 81.8
+}
+df["Ordered/owned by(gdp)"] = df["Ordered/owned by(gdp)"].map(military_spending)
 for i in range (len(df)):
     df.at[i,'cost(mil$)'] = df.at[i,'cost(mil$)'] * df.at[i,'Quantities']
-print(df['Ordered/owned by'].unique())
+    if (i > len(df)-4):
+        df.at[i,'Successfull procurement'] = 0
+    else:
+        df.at[i,'Successfull procurement'] = 1
 # removing missing data
 df_no_missing = df.loc[(df["cost(mil$)"] != "Unknown") & (df["cost(mil$)"] != "")]
-X = df_no_missing.drop('Successfull procurement',axis=1).copy()
+X = df_no_missing.drop('Quantities',axis=1).copy()
+X = X.drop('Successfull procurement',axis=1).copy()
 X = X.drop('Model of the helicopter',axis=1).copy()
-X = X.drop('Still operatable?',axis=1).copy()
+#X = X.drop('Ordered/owned by',axis=1).copy()
 X = X.drop('Date of order',axis=1).copy()
+print(X)
 y = df_no_missing['Successfull procurement'].copy()
 '''
 one hot encoding

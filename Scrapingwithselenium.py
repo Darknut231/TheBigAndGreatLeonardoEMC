@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 import time
 import os
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 driver=webdriver.Chrome()
 row_list=[]
@@ -14,7 +16,7 @@ row_list=[]
 for page in range(1, 9):  # this loops through all the pages and collects the data from them
     url = f"https://www.helis.com/database/model/AW109/cn?pag={page}"
     driver.get(url)
-    time.sleep(3) #Press Consent
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@class="fc-button fc-cta-consent fc-primary-button"]'))).click()
 
     rows = driver.find_elements(By.XPATH, "//tr[starts-with(@id,'trcnmod')]")
 
