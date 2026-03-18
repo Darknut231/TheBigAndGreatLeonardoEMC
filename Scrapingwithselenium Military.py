@@ -9,7 +9,11 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-driver=webdriver.Chrome()
+options = webdriver.ChromeOptions()
+prefs = {"profile.managed_default_content_settings.images": 2}
+options.add_experimental_option("prefs", prefs)
+
+driver = webdriver.Chrome(options=options)
 row_list=[]
 
 driver.get('https://www.helis.com/database')
