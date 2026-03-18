@@ -16,10 +16,9 @@ driver.get('https://www.helis.com/database')
 WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, '//*[@class="fc-button fc-cta-consent fc-primary-button"]'))).click()
 
 #First Helicopter,  Ofc all the parameters need changing
-for page in range(1, 9):  # this loops through all the pages and collects the data from them
-    url = f"https://www.helis.com/database/model/AW109/cn?pag={page}"
+for page in range(1, 2):  # this loops through all the pages and collects the data from them
+    url = f"https://www.helis.com/database/model/A109LUH/cn?pag={page}"
     driver.get(url)
-    time.sleep(3) #Press Consent
 
     rows = driver.find_elements(By.XPATH, "//tr[starts-with(@id,'trcnmod')]")
 
@@ -28,18 +27,17 @@ for page in range(1, 9):  # this loops through all the pages and collects the da
         #MODEL
         model=driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/h1').text
         
-        #TAIL NUMBER
         #code = row.find_element(By.XPATH, ".//td[5]/b").text  
         
         #YEAR
-        if len(row.find_element(By.XPATH, ".//td[4]").text) > 0:
-            year = row.find_element(By.XPATH, ".//td[4]").text
+        if len(row.find_element(By.XPATH, ".//td[3]").text) > 0:
+            year = row.find_element(By.XPATH, ".//td[3]").text
         else:
             year='NA'                                           
         
 
         #COUNTRY, This bit is ai so idk how it works sry
-        imgs = row.find_elements(By.XPATH, ".//td[5]/img")
+        imgs = row.find_elements(By.XPATH, ".//td[4]/img")
 
         countries = [img.get_attribute("alt") for img in imgs if img.get_attribute("alt")]
         
@@ -65,9 +63,8 @@ for page in range(1, 9):  # this loops through all the pages and collects the da
             }
         row_list.append(vid_item)
 
-#Diferent Helicopter#  Ofc all the parameters need changing
-for page in range(1, 9):  # this loops through all the pages and collects the data from them
-    url = f"https://www.helis.com/database/model/AW109/cn?pag={page}"
+
+    url = f"https://www.helis.com/database/model/1193/{page}"
     driver.get(url)
     time.sleep(3) #Press Consent
 
