@@ -43,7 +43,6 @@ X = X.drop('Successfull procurement',axis=1).copy()
 X = X.drop('Model of the helicopter',axis=1).copy()
 #X = X.drop('Ordered/owned by',axis=1).copy()
 X = X.drop('Date of order',axis=1).copy()
-print(X)
 y = df_no_missing['Successfull procurement'].copy()
 '''
 one hot encoding
