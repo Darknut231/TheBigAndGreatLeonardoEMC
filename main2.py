@@ -16,19 +16,19 @@ from sklearn.svm import SVC
 df = pd.read_csv('EMCDATAMilitary.csv')
 modelCosts = pd.read_csv('modelToCost.csv')
 spendingData = pd.read_csv('spending_data.csv')
-print(spendingData['Country'].unique())
+for i in range(len(df)):
+    print(len(df[i][0]))
+    if (len(df[i][0]) > 6):
+        print(df[i][0])
+        df[i][0] = df[i][0][1:5] + ']'
+print(df['Country'].unique())
 militarySpending = []
 gdps = []
-for row in spendingData:
-    gdps.append(row[2])
-    militarySpending.append(row[3])
+for i in range (len(spendingData)):
+    gdps.append(spendingData[i][2])
+    militarySpending.append(spendingData[i][3])
 df["Ordered/owned by(gdp)"] = df["Ordered/owned by(gdp)"].map(militarySpending)
-for i in range (len(df)):
-    df.at[i,'cost(mil$)'] = df.at[i,'cost(mil$)'] * df.at[i,'Quantities']
-    if (i > len(df)-4):
-        df.at[i,'Successfull procurement'] = 0
-    else:
-        df.at[i,'Successfull procurement'] = 1
+# note for future: connect adjacent procurements into one (if they are similar enough)
 # removing missing data
 df_no_missing = df.loc[(df["cost(mil$)"] != "Unknown") & (df["cost(mil$)"] != "")]
 X = df_no_missing.drop('Quantities',axis=1).copy()
