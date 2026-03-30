@@ -13,7 +13,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.svm import SVC
 # reading the file
-df = pd.read_csv('military spending cool.csv')
+df = pd.read_csv('EMCDATAMilitary.csv')
 modelCosts = pd.read_csv('modelToCost.csv')
 spendingData = pd.read_csv('spending_data.csv')
 print(spendingData['Country'].unique())
