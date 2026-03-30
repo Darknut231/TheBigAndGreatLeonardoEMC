@@ -14,22 +14,15 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.svm import SVC
 # reading the file
 df = pd.read_csv('military spending cool.csv')
-military_spending = {
-    "Poland": 38.0,
-    "USA": 997.0,
-    "Israel": 46.5,
-    "Italy": 38.0,
-    "Algeria": 21.8,
-    "Norway": 10.4,
-    "Saudi": 80.3,
-    "India": 86.1,
-    "Turkmesistan": 1.0,
-    "Indonesia": 11.0,
-    "Nigeria": 3.2,
-    "Bangladesh": 5.0,
-    "England": 81.8
-}
-df["Ordered/owned by(gdp)"] = df["Ordered/owned by(gdp)"].map(military_spending)
+modelCosts = pd.read_csv('modelToCost.csv')
+spendingData = pd.read_csv('spending_data.csv')
+print(spendingData['Country'].unique())
+militarySpending = []
+gdps = []
+for row in spendingData:
+    gdps.append(row[2])
+    militarySpending.append(row[3])
+df["Ordered/owned by(gdp)"] = df["Ordered/owned by(gdp)"].map(militarySpending)
 for i in range (len(df)):
     df.at[i,'cost(mil$)'] = df.at[i,'cost(mil$)'] * df.at[i,'Quantities']
     if (i > len(df)-4):
