@@ -29,7 +29,6 @@ for index,row in spendingData.iterrows():
     gdps[row.iloc[0]]=row.iloc[2]
     militarySpending[row.iloc[0]] = row.iloc[3]
 df["Military spending"] = df["Country"].map(militarySpending)
-print(df["Model"].unique())
 df["Model"] = df["Model"].map(modelCosts)
 df["Gdp"] = df["Country"].map(gdps)
 # note for future: connect adjacent procurements into one (if they are similar enough)
@@ -39,17 +38,18 @@ df_no_missing = df.loc[(df["Gdp"] != "Unknown") & (df["Gdp"] != "NA") & (df['Yea
 running = 0
 for index,row in df_no_missing.iterrows():
     if(index<len(df_no_missing)-1):
-        if(row[1] == df_no_missing.loc[index+1]['Year'] and row[0] == df_no_missing.loc[index+1]['Country']):
+        if(row.iloc[1] == df_no_missing.loc[index+1]['Year'] and row.iloc[0] == df_no_missing.loc[index+1]['Country']):
             running += 1
         else:
             running += 1
             total_cost = running*float(row[3]) #at this point row[3] is meant to be the cost of the helicopter
-            new_row = pd.DataFrame([{'Military spending': row[4], 'Gdp': row[5],'total cost':total_cost,'Successful':row[6]}])
+            new_row = pd.DataFrame([{'Military spending': row.iloc[4], 'Gdp': row.iloc[5],'total cost':total_cost,'Successful':row.iloc[6]}])
             unitedData = pd.concat([unitedData, new_row], ignore_index=True) # adding the new row to the united data
             running = 0
 #dropping extra columns
 X = unitedData.drop('Successful',axis=1).copy()
 y = unitedData['Successful'].copy()
+y = y.astype(int)
 '''
 one hot encoding
 X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
