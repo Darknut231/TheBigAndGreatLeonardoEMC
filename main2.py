@@ -14,8 +14,9 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.svm import SVC
 # reading the file
 df = pd.read_csv('EMCDATAMilitary.csv')
-modelCosts = pd.read_csv('modelToCost.csv')
+modelCosts = pd.read_csv('modelToCost.csv', header=None, index_col=0).squeeze()
 spendingData = pd.read_csv('spending_data.csv')
+unitedData = pd.read_csv('unitedData.csv')
 for index,row in df.iterrows():
     if (len(row.iloc[0]) > 6):
         df.loc[index,'Country'] = df.loc[index,'Country'][2:4]
@@ -28,20 +29,27 @@ for index,row in spendingData.iterrows():
     gdps[row.iloc[0]]=row.iloc[2]
     militarySpending[row.iloc[0]] = row.iloc[3]
 df["Military spending"] = df["Country"].map(militarySpending)
+print(df["Model"].unique())
+df["Model"] = df["Model"].map(modelCosts)
 df["Gdp"] = df["Country"].map(gdps)
 # note for future: connect adjacent procurements into one (if they are similar enough)
 # removing missing data
 df_no_missing = df.loc[(df["Gdp"] != "Unknown") & (df["Gdp"] != "NA") & (df['Year'] != "NA") & (df['Military spending'] != "NA") & (df["Country"] != "NA") & (df["Year"]!= "NA") & (df["Still Operational"]!= "NA") & (df["Model"]!= "NA") & (df["Successful"]!= "NA")]
-#print(df_no_missing)
-
-X = df_no_missing.drop('Still Operational',axis=1).copy()
-#X = X.drop('',axis=1).copy()
-X = X.drop('Model',axis=1).copy()
-#X = X.drop('Ordered/owned by',axis=1).copy()
-X = X.drop('Year',axis=1).copy()
-X = X.drop('Country',axis=1).copy()
-print(X.isnull().any())
-y = df_no_missing['Successful'].copy()
+#uniting procurements in the same year into one
+running = 0
+for index,row in df_no_missing.iterrows():
+    if(index<len(df_no_missing)-1):
+        if(row[1] == df_no_missing.loc[index+1]['Year'] and row[0] == df_no_missing.loc[index+1]['Country']):
+            running += 1
+        else:
+            running += 1
+            total_cost = running*float(row[3]) #at this point row[3] is meant to be the cost of the helicopter
+            new_row = pd.DataFrame([{'Military spending': row[4], 'Gdp': row[5],'total cost':total_cost,'Successful':row[6]}])
+            unitedData = pd.concat([unitedData, new_row], ignore_index=True) # adding the new row to the united data
+            running = 0
+#dropping extra columns
+X = unitedData.drop('Successful',axis=1).copy()
+y = unitedData['Successful'].copy()
 '''
 one hot encoding
 X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
