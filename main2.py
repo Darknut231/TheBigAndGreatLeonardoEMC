@@ -16,27 +16,32 @@ from sklearn.svm import SVC
 df = pd.read_csv('EMCDATAMilitary.csv')
 modelCosts = pd.read_csv('modelToCost.csv')
 spendingData = pd.read_csv('spending_data.csv')
-for i in range(len(df)):
-    print(len(df[i][0]))
-    if (len(df[i][0]) > 6):
-        print(df[i][0])
-        df[i][0] = df[i][0][1:5] + ']'
-print(df['Country'].unique())
-militarySpending = []
-gdps = []
-for i in range (len(spendingData)):
-    gdps.append(spendingData[i][2])
-    militarySpending.append(spendingData[i][3])
-df["Ordered/owned by(gdp)"] = df["Ordered/owned by(gdp)"].map(militarySpending)
+for index,row in df.iterrows():
+    if (len(row.iloc[0]) > 6):
+        df.loc[index,'Country'] = df.loc[index,'Country'][2:4]
+    else:
+        df.loc[index,'Country'] = df.loc[index,'Country'][2:4]
+        #print(row[0])
+militarySpending = {}
+gdps = {}
+for index,row in spendingData.iterrows():
+    gdps[row.iloc[0]]=row.iloc[2]
+    militarySpending[row.iloc[0]] = row.iloc[3]
+df["Military spending"] = df["Country"].map(militarySpending)
+df["Gdp"] = df["Country"].map(gdps)
 # note for future: connect adjacent procurements into one (if they are similar enough)
 # removing missing data
-df_no_missing = df.loc[(df["cost(mil$)"] != "Unknown") & (df["cost(mil$)"] != "")]
-X = df_no_missing.drop('Quantities',axis=1).copy()
-X = X.drop('Successfull procurement',axis=1).copy()
-X = X.drop('Model of the helicopter',axis=1).copy()
+df_no_missing = df.loc[(df["Gdp"] != "Unknown") & (df["Gdp"] != "NA") & (df['Year'] != "NA") & (df['Military spending'] != "NA") & (df["Country"] != "NA") & (df["Year"]!= "NA") & (df["Still Operational"]!= "NA") & (df["Model"]!= "NA") & (df["Successful"]!= "NA")]
+#print(df_no_missing)
+
+X = df_no_missing.drop('Still Operational',axis=1).copy()
+#X = X.drop('',axis=1).copy()
+X = X.drop('Model',axis=1).copy()
 #X = X.drop('Ordered/owned by',axis=1).copy()
-X = X.drop('Date of order',axis=1).copy()
-y = df_no_missing['Successfull procurement'].copy()
+X = X.drop('Year',axis=1).copy()
+X = X.drop('Country',axis=1).copy()
+print(X.isnull().any())
+y = df_no_missing['Successful'].copy()
 '''
 one hot encoding
 X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])

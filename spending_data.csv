@@ -1,19 +1,35 @@
 contry - code,country by name,GDP(in $Billions) 2025-2026,defence spending 2025-2026 (in billions)
-US,united states,30615.743,848.3
-UK,united kingdom,395.878,83.76
-FR,france,3361.557,60.82
-AU,australia,1829.508,40
-ES,spain,1891.371,32.8
-CH,switzerland,1002.666,5.9
-DE,germany,5013.574,101.5
-NZ,new zealand,262.909,3.1
-IT,italy,2543.677,38.6
-CN,china,19398.577,285
-GR,greece,282.019,6.6
-NO,norway,517.102,7.7
-BR,brazil,225.691,22.4
-JP,japan,4279.828,53.2
-SI,singapore,574.185,16.2
-NG,nigeria,285.003,3.2
-AR,argentina,683.371,4.7
-AE,the united arab emirates,569.097,21.3
+US,United States,30615.743,848.3
+UK,United Kingdom,395.878,83.76
+FR,France,3361.557,60.82
+AU,Australia,1829.508,40
+ES,Spain,1891.371,32.8
+CH,Switzerland,1002.666,5.9
+DE,Germany,5013.574,101.5
+NZ,New Zealand,262.909,3.1
+IT,Italy,2543.677,38.6
+CN,China,19398.577,285
+GR,Greece,282.019,6.6
+NO,Norway,517.102,7.7
+BR,Brazil,225.691,22.4
+JP,Japan,4279.828,53.2
+SI,Singapore,574.185,16.2
+NG,Nigeria,285.003,3.2
+AR,Argentina,683.371,4.7
+AE,the United Arab Emirates,569.097,21.3
+ZA,South Africa,460.38,3
+SE,Sweden,662.32,12
+MY,Malaysia,470.57,4.6
+DZ,People Democratic Republic of Algeria,228,18.3
+PO,Poland,1039.62,33
+SA,Saudi Arabia,1268.54,75.8
+IN,India,4125.21,86.1
+TM,Turkmenistan,72.12,1.1
+QA,Qatar,222.12,11.4
+TH,Thailand,558.57,7.3
+MT,Malta,27.75,0.09
+PK,Pakistan,410.5,10.3
+EG,Egypt,349.26,5.4
+KR,South Korea,1858.57,48.47
+RP,Philippines,494.16,6.1
+AT,Austria,566.46,4.1
