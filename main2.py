@@ -69,7 +69,8 @@ def plotTree(clf_dt,X):
 plotTree(clf_dt,X) #x encoded here
 
 #too many positional arguments???
-
+importances = clf_dt.feature_importances_
+print(importances)
 clf = SVC(random_state=0)
 clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
