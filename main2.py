@@ -56,6 +56,7 @@ X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions
 '''
 # splitting the data
 X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=25) #x encoded here
+print(X_train["total cost"].unique())
 clf_dt = DecisionTreeClassifier(random_state=15)
 clf_dt = clf_dt.fit(X_train,y_train)
 def plotTree(clf_dt,X):
@@ -68,9 +69,9 @@ def plotTree(clf_dt,X):
 #print(clf_dt.feature_importances_)
 plotTree(clf_dt,X) #x encoded here
 
-#too many positional arguments???
+#getting importances
 importances = clf_dt.feature_importances_
-print(importances)
+#print(importances)
 clf = SVC(random_state=0)
 clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
@@ -79,4 +80,3 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
 disp.plot() # here the matrix is displayed
 
 plt.show()
-#df_no_missing = df with no missings in cost or date =)
