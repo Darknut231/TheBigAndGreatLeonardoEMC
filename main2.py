@@ -56,7 +56,6 @@ X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions
 '''
 # splitting the data
 X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=29) #x encoded here
-print(X_train["total cost"].unique())
 clf_dt = DecisionTreeClassifier(random_state=29)
 clf_dt = clf_dt.fit(X_train,y_train)
 def plotTree(clf_dt,X):
