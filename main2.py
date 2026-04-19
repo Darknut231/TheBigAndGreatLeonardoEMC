@@ -14,7 +14,7 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.svm import SVC
 # reading the file
 df = pd.read_csv('EMCDATAMilitary.csv')
-modelCosts = pd.read_csv('modelToCost.csv', header=None, index_col=0).squeeze()
+modelCosts = pd.read_csv('modelToCostV2.csv', header=None, index_col=0).squeeze()
 spendingData = pd.read_csv('spending_data.csv')
 unitedData = pd.read_csv('unitedData.csv')
 for index,row in df.iterrows():
@@ -55,9 +55,9 @@ one hot encoding
 X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions $ of the owner'])
 '''
 # splitting the data
-X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=25) #x encoded here
+X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=29) #x encoded here
 print(X_train["total cost"].unique())
-clf_dt = DecisionTreeClassifier(random_state=15)
+clf_dt = DecisionTreeClassifier(random_state=29)
 clf_dt = clf_dt.fit(X_train,y_train)
 def plotTree(clf_dt,X):
     plt.figure(figsize=(15,7.5))
@@ -72,11 +72,9 @@ plotTree(clf_dt,X) #x encoded here
 #getting importances
 importances = clf_dt.feature_importances_
 #print(importances)
-clf = SVC(random_state=0)
-clf.fit(X_train, y_train)
-predictions = clf.predict(X_test)
-cm = confusion_matrix(y_test, predictions, labels=clf.classes_)
-disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+predictions = clf_dt.predict(X_test)
+cm = confusion_matrix(y_test, predictions, labels=clf_dt.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf_dt.classes_)
 disp.plot() # here the matrix is displayed
 
 plt.show()
