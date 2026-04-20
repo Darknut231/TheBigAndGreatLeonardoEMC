@@ -12,6 +12,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import tree
 # reading the file
 df = pd.read_csv('EMCDATAMilitary.csv')
 modelCosts = pd.read_csv('modelToCostV2.csv', header=None, index_col=0).squeeze()
@@ -56,6 +58,7 @@ X_encoded = pd.get_dummies(X,columns=['cost(mil$)','Date of order','GDP billions
 '''
 # splitting the data
 X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=29) #x encoded here
+clf = RandomForestClassifier(random_state=0)
 clf_dt = DecisionTreeClassifier(random_state=29)
 clf_dt = clf_dt.fit(X_train,y_train)
 def plotTree(clf_dt,X):
@@ -66,10 +69,13 @@ def plotTree(clf_dt,X):
             class_names=["Unsuccess","Success"],
             feature_names=X.columns)
 #print(clf_dt.feature_importances_)
-plotTree(clf_dt,X) #x encoded here
+#plotTree(clf_dt,X) #x encoded here
 
-#getting importances
-importances = clf_dt.feature_importances_
+#getting importances of features
+clf.fit(X_train,y_train)
+importances = clf.feature_importances_
+# plotting importances according to random forest
+pd.Series(importances, index=X.columns).sort_values().plot(kind='barh')
 #print(importances)
 predictions = clf_dt.predict(X_test)
 cm = confusion_matrix(y_test, predictions, labels=clf_dt.classes_)
